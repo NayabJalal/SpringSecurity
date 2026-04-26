@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.service;
 
+import com.example.SpringSecurity.entity.Role;
 import com.example.SpringSecurity.entity.User;
 import com.example.SpringSecurity.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,14 +10,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -31,6 +33,7 @@ public class UserService implements UserDetailsService {
                 .authorities(mapRolesToAuthorities(user))
                 .build();
     }
+
 
     private Collection<? extends GrantedAuthority > mapRolesToAuthorities(User user) {
         return user.getRole().stream()

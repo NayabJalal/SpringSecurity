@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 //fetch the payload back.
+@Component
 public class JwtUtil {
 
     @Value("${jwt.secret}")
