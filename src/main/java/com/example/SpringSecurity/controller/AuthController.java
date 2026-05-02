@@ -47,9 +47,14 @@ public class AuthController {
 
         UserDetails userDetails = userService.loadUserByUsername(loginUserDto.getEmail());
 
+        // GrantedAuthority uses Spring's "ROLE_*" prefix; Role enum names are USER, ADMIN.
         Set<Role> roles = userDetails.getAuthorities()
                 .stream()
-                .map(auth -> Role.valueOf(auth.getAuthority()))
+                .map(GrantedAuthority::getAuthority)
+                .map(authority -> authority.startsWith("ROLE_")
+                        ? authority.substring("ROLE_".length())
+                        : authority)
+                .map(Role::valueOf)
                 .collect(Collectors.toSet());
 
 
